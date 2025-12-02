@@ -1,0 +1,106 @@
+% https://confluence.cern.ch/display/IC/Absolute+energy+and+machine+length+calibration+in+the+SPS
+
+
+
+\documentclass[a4paper,
+               %boxit,        % check whether paper is inside correct margins
+               %titlepage,    % separate title page
+               %refpage       % separate references
+               biblatex,     % biblatex is used
+               keeplastbox,   % flushend option: not to un-indent last line in References
+               %nospread,     % flushend option: do not fill with whitespace to balance columns
+               hyphens,      % allow \url to hyphenate at "-" (hyphens)
+               %xetex,        % use XeLaTeX to process the file
+               %luatex,       % use LuaLaTeX to process the file
+               ]{jacow}
+%
+% ONLY FOR \footnote in table/tabular
+%
+\usepackage{pdfpages,multirow,ragged2e} %
+%
+% CHANGE SEQUENCE OF GRAPHICS EXTENSION TO BE EMBEDDED
+% ----------------------------------------------------
+% test for XeTeX where the sequence is by default eps-> pdf, jpg, png, pdf, ...
+%    and the JACoW template provides JACpic2v3.eps and JACpic2v3.jpg which
+%    might generates errors, therefore PNG and JPG first
+%
+\makeatletter%
+	\ifboolexpr{bool{xetex}}
+	 {\renewcommand{\Gin@extensions}{.pdf,%
+	                    .png,.jpg,.bmp,.pict,.tif,.psd,.mac,.sga,.tga,.gif,%
+	                    .eps,.ps,%
+	                    }}{}
+\makeatother
+
+% CHECK FOR XeTeX/LuaTeX BEFORE DEFINING AN INPUT ENCODING
+% --------------------------------------------------------
+%   utf8  is default for XeTeX/LuaTeX
+%   utf8  in LaTeX only realises a small portion of codes
+%
+\ifboolexpr{bool{xetex} or bool{luatex}} % test for XeTeX/LuaTeX
+ {}                                      % input encoding is utf8 by default
+ {\usepackage[utf8]{inputenc}}           % switch to utf8
+
+\usepackage[USenglish]{babel}
+
+%
+% if BibLaTeX is used
+%
+\ifboolexpr{bool{jacowbiblatex}}%
+ {%
+  \addbibresource{WEPM001_ref.bib}
+ }{}
+\listfiles
+
+%%
+%%   Lengths for the spaces in the title
+%%   \setlength\titleblockstartskip{..}  %before title, default 3pt
+%%   \setlength\titleblockmiddleskip{..} %between title + author, default 1em
+%%   \setlength\titleblockendskip{..}    %afterauthor, default 1em
+
+\begin{document}
+
+\title{Spin tracking and equilibrium polarization computation in Xsuite: implementation and benchmarks}
+
+\author{
+G. Iadarola,
+R. De Maria,
+K. Hock,
+J. Keintzel,
+S. Lopaciuk,
+J. Wenninger
+}
+\maketitle
+
+%
+\begin{abstract}
+Precise modelling of spin dynamics is essential for the energy-calibration programme of the FCC-ee collider, where resonant depolarization measurements require accurate predictions of polarization buildup and of the spin-tune response to machine errors. We present spin modeling capabilities recently implemented in the Xsuite simulation framework, enabling high-performance six-dimensional tracking of particle trajectories together with their spin motion. The module includes the integration of the Thomas–BMT equation and a linearized computation of the invariant spin field (ISF), obtained from the one-turn linear map. Radiative spin effects are incorporated through the Sokolov–Ternov mechanism and its generalizations, allowing the evaluation of equilibrium polarization and of its buildup time.
+The new tool has been benchmarked against the BMAD code for representative lattices, covering both spin-closed-orbit properties and long-term polarization evolution.
+\end{abstract}
+
+
+\end{document}
+
+
+
+
+
+
+
+% \documentclass{article}
+% \usepackage{graphicx} % Required for inserting images
+
+% \title{}
+% \author{giovanni.iadarola }
+% \date{November 2025}
+
+% \begin{document}
+
+% \maketitle
+
+% \section{Introduction}
+
+% \end{document}
+
+
+
