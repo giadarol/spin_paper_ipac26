@@ -48,7 +48,7 @@
 %
 \ifboolexpr{bool{jacowbiblatex}}%
  {%
-  \addbibresource{WEPM001_ref.bib}
+    \addbibresource{bibliography.bib}
  }{}
 \listfiles
 
@@ -77,6 +77,90 @@ J. Wenninger
 Precise modelling of spin dynamics is essential for the energy-calibration programme of the FCC-ee collider, where resonant depolarization measurements require accurate predictions of polarization buildup and of the spin-tune response to machine errors. We present spin modeling capabilities recently implemented in the Xsuite simulation framework, enabling high-performance six-dimensional tracking of particle trajectories together with their spin motion. The module includes the integration of the Thomas–BMT equation and a linearized computation of the invariant spin field (ISF), obtained from the one-turn linear map. Radiative spin effects are incorporated through the Sokolov–Ternov mechanism and its generalizations, allowing the evaluation of equilibrium polarization and of its buildup time.
 The new tool has been benchmarked against the BMAD code for representative lattices, covering both spin-closed-orbit properties and long-term polarization evolution.
 \end{abstract}
+
+\section{Introduction}
+
+Accurate spin-dynamics modeling is a central requirement for the FCC-ee energy-calibration programme, where resonant depolarization will be used to infer the beam energy with high precision. In this context, tracking tools need to provide not only the orbital motion but also the spin motion, the spin closed orbit, and reliable estimates of polarization buildup and depolarization. Xsuite is increasingly used for large-scale beam-dynamics studies, therefore extending it with spin capabilities is important both for machine design studies and for future operational support.
+
+This paper summarizes recent spin-physics developments in Xsuite. The implementation covers single-particle spin transport based on the Thomas--BMT equation, a first-order computation of the invariant spin field from the one-turn map, and the evaluation of equilibrium polarization and polarization time including radiative effects. The new implementation is being benchmarked against BMAD~\cite{Sagan:BmadManual}.
+
+\section{Spin Tracking Model}
+
+The spin motion is described through the Thomas--BMT equation~\cite{hoffstaetter2006high}. For a particle traveling in a magnetic field $\bm{B}$, the spin-precession angular velocity can be written as
+\begin{equation}
+\bm{\Omega}_{\mathrm{BMT}} = -\frac{1}{B\rho_{\mathrm{part}}}
+\left[(1 + a\gamma)\bm{B}_{\perp} + (1 + a)\bm{B}_{\parallel}\right],
+\end{equation}
+where $a$ is the anomalous magnetic moment, while $\bm{B}_{\parallel}$ and $\bm{B}_{\perp}$ are the magnetic-field components parallel and transverse to the particle velocity. Over an element of length $\ell$, the spin-precession angle is $\phi = |\bm{\Omega}|\ell$.
+
+In the Xsuite implementation, the spin vector is advanced through the corresponding three-dimensional rotation at each integration step. Using the unit vector $\bm{\omega} = \bm{\Omega}/|\bm{\Omega}|$, the spin transport is represented in terms of the quaternion-like coefficients
+\begin{align}
+t_0 &= \cos\left(\frac{\phi}{2}\right), &
+t_x &= \omega_x\sin\left(\frac{\phi}{2}\right), \\
+t_y &= \omega_y\sin\left(\frac{\phi}{2}\right), &
+t_s &= \omega_z\sin\left(\frac{\phi}{2}\right),
+\end{align}
+from which the standard rotation matrix is constructed and applied to the spin coordinates. This approach is well suited to Xsuite tracking because it is fully compatible with six-dimensional orbital integration and with the element-by-element tracking workflow already used for beam-dynamics studies. The same implementation is used in both tracking and optics calculations, where spin can be enabled for a line and then exploited by the Xsuite Twiss module to compute closed-orbit spin quantities and linear polarization estimates.
+
+\section{Linear Spin-Orbit Formalism}
+
+To compute spin quantities beyond direct tracking, we consider the combined orbital-spin coordinate vector
+\begin{equation}
+\bm{z} = (x, p_x, y, p_y, \zeta, \delta, s_x, s_y, s_z)^T,
+\end{equation}
+with the associated one-turn linear map
+\begin{equation}
+\mathbf{R} =
+\begin{pmatrix}
+\mathbf{R}_{\mathrm{orb}} & 0 \\
+\mathbf{D} & \mathbf{A}
+\end{pmatrix}.
+\end{equation}
+Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$. For the six orbital modes, the spin components follow
+\begin{equation}
+\bm{e}_{i,\mathrm{spin}} = (\lambda_i\mathbf{I} - \mathbf{A})^{-1}
+\mathbf{D}\,\bm{e}_{i,\mathrm{orb}}.
+\end{equation}
+This relation provides the basis for extracting the linearized invariant spin field directly from the one-turn map. The closed orbit and the corresponding closed-spin solution $\bm{n}_0$ are obtained through a numerical fixed-point search. Since spin does not affect the orbital motion, the computation is naturally split into a six-dimensional closed-orbit search followed by a three-dimensional fixed-point search for the spin.
+
+\section{Invariant Spin Field and Polarization}
+
+Following Ref.~\cite{Chao:1980fz}, the invariant spin field is expanded to first order around the closed orbit as
+\begin{equation}
+\bm{n}(\bm{z}_{\mathrm{orb}}) = \bm{n}_0 + \mathbf{N}
+\left(\bm{z}_{\mathrm{orb}} - \bm{z}_{\mathrm{orb}}^{\mathrm{CO}}\right).
+\end{equation}
+Using the one-turn map and the eigenvector decomposition above, the linear matrix $\mathbf{N}$ can be written as
+\begin{equation}
+\mathbf{N} = \mathbf{E}^{\mathrm{spin}}\left(\mathbf{E}^{\mathrm{orb}}\right)^{-1},
+\end{equation}
+where $\mathbf{E}^{\mathrm{orb}}$ collects the six orbital eigenvectors and $\mathbf{E}^{\mathrm{spin}}$ the corresponding spin components. In particular, the last column of $\mathbf{N}$ provides $d\bm{n}/d\delta$, which is a key ingredient in the evaluation of radiative depolarization.
+
+The implementation also includes the computation of equilibrium polarization and polarization time based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
+\begin{equation}
+P(t) = P(0)e^{-t/\tau_{\mathrm{tot}}} + P_{\mathrm{eq}}
+\left(1 - e^{-t/\tau_{\mathrm{tot}}}\right),
+\end{equation}
+with $P_{\mathrm{eq}} = \frac{8}{5\sqrt{3}}\,\alpha_-/\alpha_+$ and $\tau_{\mathrm{tot}}^{-1} = \frac{5\sqrt{3}}{8}\frac{r_e\hbar\gamma^5}{m_e}\alpha_+$. In the linearized treatment, $\alpha_+$ and $\alpha_-$ are evaluated from ring integrals containing the closed-orbit spin direction and the derivative $d\bm{n}/d\delta$. This yields both the buildup rate and the depolarization contribution in a form suitable for fast lattice scans.
+
+To account for nonlinear effects, Xsuite also supports a Monte Carlo approach in which the depolarization time is estimated from tracking with synchrotron-radiation quantum excitation~\cite{DUAN201581}. Combining this depolarization rate with the asymptotic polarization from the linear formalism provides a practical estimate of the nonlinear equilibrium polarization.
+
+\section{Benchmark Strategy}
+
+The new implementation has been checked against BMAD for representative lepton-ring lattices, with particular attention to the LEP1 configuration including orbit bumps used to compensate the precession induced by the experimental solenoids. The comparison addresses both deterministic quantities, such as the spin closed orbit and the first-order invariant spin field, and radiative observables, such as equilibrium polarization and polarization buildup time. The studies presented so far show good agreement with BMAD for these test cases. In addition, consistent results were observed against historical SLIM simulations for the same LEP1 setup, providing an independent cross-check of the implementation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[page=27,width=\columnwidth,trim=500 115 70 190,clip]{006_xsuite_fcc_week.pdf}
+\caption{Equilibrium polarization versus bump strength for the LEP1 benchmark with experimental-solenoid compensation bumps. Xsuite and BMAD are in good agreement over the full scan.}
+\label{fig:bmad_benchmark}
+\end{figure}
+
+\section{Conclusion}
+
+Xsuite now includes a consistent set of spin-dynamics tools covering Thomas--BMT tracking, first-order invariant-spin-field computation, and the evaluation of equilibrium polarization and polarization time. These capabilities are available within the same tracking and Twiss workflow used for broader Xsuite studies, which is important for large-scale FCC-ee applications. Benchmark comparisons for LEP1 show good agreement with BMAD and are consistent with historical SLIM simulations, supporting the use of the new module for precision spin studies relevant to energy calibration.
+
+\printbibliography
 
 
 \end{document}
