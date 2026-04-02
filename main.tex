@@ -115,17 +115,24 @@ and applied to the spin coordinates. This formulation is compatible with six-dim
 
 \section{Spin and Polarization Calculations in Twiss Module}
 
-The Xsuite Twiss module can optionally analyze spin motion together with the orbital optics. It first computes the closed orbit and the corresponding closed-spin solution $\bm{n}_0$ through a numerical fixed-point search. Because spin does not affect the orbital motion, this calculation is naturally split into a six-dimensional closed-orbit search followed by a three-dimensional fixed-point search for the spin. Linearized spin quantities are then obtained from the one-turn spin-orbit map around this solution, using the combined coordinate vector
+The Xsuite Twiss module can optionally analyze spin motion together with the orbital optics. It first computes the closed orbit and the corresponding closed-spin solution $\bm{n}_0$ through a numerical fixed-point search. Because spin does not affect the orbital motion, this calculation is naturally split into a six-dimensional closed-orbit search followed by a three-dimensional fixed-point search for the spin. 
+
+The spin motion is then analyzed as follows.
+We introduce the combined coordinate vector
 \begin{equation}
 \bm{z} = (x, p_x, y, p_y, \zeta, \delta, s_x, s_y, s_z)^T,
 \end{equation}
-with
+where
 \begin{equation}
 \bm{z}_{\mathrm{orb}} = (x, p_x, y, p_y, \zeta, \delta)^T,
-\qquad
+\end{equation}
+are the orbital coordinates and
+\begin{equation}
 \bm{z}_{\mathrm{spin}} = (s_x, s_y, s_z)^T,
 \end{equation}
-and with the associated one-turn linear map
+are the three spin components.
+
+The one-turn map linearized around the closed orbit can written as:
 \begin{equation}
 \mathbf{R} =
 \begin{pmatrix}
@@ -133,19 +140,21 @@ and with the associated one-turn linear map
 \mathbf{D} & \mathbf{A}
 \end{pmatrix}.
 \end{equation}
-Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$, such that $\mathbf{R}\bm{e}_i = \lambda_i\bm{e}_i$. Writing the eigenvector equation in block form gives
+Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$, such that $\mathbf{R}\bm{e}_i = \lambda_i\bm{e}_i$. 
+Using the block structure of $\mathbf{R}$, we can write:
 \begin{align}
 \mathbf{R}_{\mathrm{orb}}\,\bm{e}_{i,\mathrm{orb}} &= \lambda_i\bm{e}_{i,\mathrm{orb}}, \\
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}} + \mathbf{A}\,\bm{e}_{i,\mathrm{spin}} &= \lambda_i\bm{e}_{i,\mathrm{spin}}.
 \end{align}
-Therefore,
+This shows that the orbital part of the 9D eigenvector $\bm{e}_i$ is an eigenvector of the orbital map $\mathbf{R}_{\mathrm{orb}}$, while the spin part is related to the orbital part through
 \begin{equation}
 \bm{e}_{i,\mathrm{spin}} = (\lambda_i\mathbf{I} - \mathbf{A})^{-1}
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}}.
 \end{equation}
-This relation provides the basis for extracting the linearized invariant spin field directly from the one-turn map.
+Once the eigenvectors are computed at a given location, they can be propagated to any other location along by tracking particles having the eigenvectors as initial conditions.
 
-Following Ref.~\cite{Chao:1980fz}, the invariant spin field is expanded to first order around the closed orbit as
+From the eigenvectors we can obtain to first order the Invariant Spin Field (ISF) function \textbf{[REF]}, which is necessary for the evaluation of radiative depolarization effects.
+Following Ref.~\cite{Chao:1980fz}, the ISF function  expanded to first order around the closed orbit can be written as
 \begin{equation}
 \bm{n}(\bm{z}_{\mathrm{orb}}) = \bm{n}_0 + \mathbf{N}
 \left(\bm{z}_{\mathrm{orb}} - \bm{z}_{\mathrm{orb}}^{\mathrm{CO}}\right).
