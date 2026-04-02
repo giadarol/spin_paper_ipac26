@@ -17,6 +17,7 @@
 % ONLY FOR \footnote in table/tabular
 %
 \usepackage{pdfpages,multirow,ragged2e} %
+\usepackage{bm}
 %
 % CHANGE SEQUENCE OF GRAPHICS EXTENSION TO BE EMBEDDED
 % ----------------------------------------------------
@@ -147,14 +148,25 @@ To account for nonlinear effects, Xsuite also supports a Monte Carlo approach in
 
 \section{Benchmark Strategy}
 
-The new implementation has been checked against BMAD for representative lepton-ring lattices, with particular attention to the LEP1 configuration including orbit bumps used to compensate the precession induced by the experimental solenoids. The comparison addresses both deterministic quantities, such as the spin closed orbit and the first-order invariant spin field, and radiative observables, such as equilibrium polarization and polarization buildup time. The studies presented so far show good agreement with BMAD for these test cases. In addition, consistent results were observed against historical SLIM simulations for the same LEP1 setup, providing an independent cross-check of the implementation.
+The new implementation has been checked against BMAD for representative lepton-ring lattices, with particular attention to the LEP1 configuration including orbit bumps used to compensate the precession induced by the experimental solenoids. The comparison addresses both deterministic quantities, such as the spin closed orbit and the first-order invariant spin field, and radiative observables, such as equilibrium polarization and polarization buildup time.
 
 \begin{figure}[t]
 \centering
-\includegraphics[page=27,width=\columnwidth,trim=500 115 70 190,clip]{006_xsuite_fcc_week.pdf}
-\caption{Equilibrium polarization versus bump strength for the LEP1 benchmark with experimental-solenoid compensation bumps. Xsuite and BMAD are in good agreement over the full scan.}
-\label{fig:bmad_benchmark}
+\includegraphics[width=\columnwidth]{orbit_and_spin.png}
+\caption{Comparison between Xsuite and BMAD for the LEP1 benchmark with compensation bumps. The figure shows the closed vertical orbit and the corresponding spin components along the ring.}
+\label{fig:orbit_spin_benchmark}
 \end{figure}
+
+Figure~\ref{fig:orbit_spin_benchmark} shows that the two codes provide nearly identical closed-orbit and spin patterns around the machine. This validates both the closed-spin computation and the linearized spin transport used in Xsuite.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{polarization.png}
+\caption{Equilibrium polarization as a function of bump strength for the LEP1 benchmark. Xsuite and BMAD are in close agreement over the full scan.}
+\label{fig:polarization_benchmark}
+\end{figure}
+
+The global polarization estimate is also well reproduced, as shown in Fig.~\ref{fig:polarization_benchmark}. In addition, consistent results were observed against historical SLIM simulations for the same LEP1 setup, providing an independent cross-check of the implementation.
 
 \section{Conclusion}
 
