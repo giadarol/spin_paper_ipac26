@@ -113,9 +113,9 @@ from which the standard rotation matrix is constructed,
 \end{equation}
 and applied to the spin coordinates. This formulation is compatible with six-dimensional orbital integration and with the element-by-element workflow already used in Xsuite. The same implementation is used in both tracking and optics calculations, where spin can be enabled for a line and then exploited by the Twiss module to compute closed-orbit spin quantities and linear polarization estimates.
 
-\section{Linear Spin-Orbit Formalism}
+\section{Spin and Polarization Calculations in Twiss Module}
 
-To compute spin quantities beyond direct tracking, we consider the combined orbital-spin coordinate vector
+The Xsuite Twiss module can optionally analyze spin motion together with the orbital optics. It first computes the closed orbit and the corresponding closed-spin solution $\bm{n}_0$ through a numerical fixed-point search. Because spin does not affect the orbital motion, this calculation is naturally split into a six-dimensional closed-orbit search followed by a three-dimensional fixed-point search for the spin. Linearized spin quantities are then obtained from the one-turn spin-orbit map around this solution, using the combined coordinate vector
 \begin{equation}
 \bm{z} = (x, p_x, y, p_y, \zeta, \delta, s_x, s_y, s_z)^T,
 \end{equation}
@@ -143,9 +143,7 @@ Therefore,
 \bm{e}_{i,\mathrm{spin}} = (\lambda_i\mathbf{I} - \mathbf{A})^{-1}
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}}.
 \end{equation}
-This relation provides the basis for extracting the linearized invariant spin field directly from the one-turn map. The closed orbit and the corresponding closed-spin solution $\bm{n}_0$ are obtained through a numerical fixed-point search. Since spin does not affect the orbital motion, the computation is naturally split into a six-dimensional closed-orbit search followed by a three-dimensional fixed-point search for the spin.
-
-\section{Invariant Spin Field and Polarization}
+This relation provides the basis for extracting the linearized invariant spin field directly from the one-turn map.
 
 Following Ref.~\cite{Chao:1980fz}, the invariant spin field is expanded to first order around the closed orbit as
 \begin{equation}
