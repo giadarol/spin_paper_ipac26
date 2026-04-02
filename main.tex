@@ -101,7 +101,17 @@ t_x &= \omega_x\sin\left(\frac{\phi}{2}\right), \\
 t_y &= \omega_y\sin\left(\frac{\phi}{2}\right), &
 t_s &= \omega_z\sin\left(\frac{\phi}{2}\right),
 \end{align}
-from which the standard rotation matrix is constructed and applied to the spin coordinates. This approach is well suited to Xsuite tracking because it is fully compatible with six-dimensional orbital integration and with the element-by-element tracking workflow already used for beam-dynamics studies. The same implementation is used in both tracking and optics calculations, where spin can be enabled for a line and then exploited by the Xsuite Twiss module to compute closed-orbit spin quantities and linear polarization estimates.
+from which the standard rotation matrix is constructed,
+\begin{equation}
+\resizebox{\columnwidth}{!}{$
+\mathbf{M} =
+\begin{pmatrix}
+(t_0^2 + t_x^2) - (t_s^2 + t_y^2) & 2(t_x t_y - t_0 t_s) & 2(t_x t_s + t_0 t_y) \\
+2(t_x t_y + t_0 t_s) & (t_0^2 + t_y^2) - (t_x^2 + t_s^2) & 2(t_s t_y - t_0 t_x) \\
+2(t_x t_s - t_0 t_y) & 2(t_s t_y + t_0 t_x) & (t_0^2 + t_s^2) - (t_x^2 + t_y^2)
+\end{pmatrix}$},
+\end{equation}
+and applied to the spin coordinates. This formulation is compatible with six-dimensional orbital integration and with the element-by-element workflow already used in Xsuite. The same implementation is used in both tracking and optics calculations, where spin can be enabled for a line and then exploited by the Twiss module to compute closed-orbit spin quantities and linear polarization estimates.
 
 \section{Linear Spin-Orbit Formalism}
 
@@ -109,7 +119,13 @@ To compute spin quantities beyond direct tracking, we consider the combined orbi
 \begin{equation}
 \bm{z} = (x, p_x, y, p_y, \zeta, \delta, s_x, s_y, s_z)^T,
 \end{equation}
-with the associated one-turn linear map
+with
+\begin{equation}
+\bm{z}_{\mathrm{orb}} = (x, p_x, y, p_y, \zeta, \delta)^T,
+\qquad
+\bm{z}_{\mathrm{spin}} = (s_x, s_y, s_z)^T,
+\end{equation}
+and with the associated one-turn linear map
 \begin{equation}
 \mathbf{R} =
 \begin{pmatrix}
@@ -117,7 +133,12 @@ with the associated one-turn linear map
 \mathbf{D} & \mathbf{A}
 \end{pmatrix}.
 \end{equation}
-Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$. For the six orbital modes, the spin components follow
+Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$, such that $\mathbf{R}\bm{e}_i = \lambda_i\bm{e}_i$. Writing the eigenvector equation in block form gives
+\begin{align}
+\mathbf{R}_{\mathrm{orb}}\,\bm{e}_{i,\mathrm{orb}} &= \lambda_i\bm{e}_{i,\mathrm{orb}}, \\
+\mathbf{D}\,\bm{e}_{i,\mathrm{orb}} + \mathbf{A}\,\bm{e}_{i,\mathrm{spin}} &= \lambda_i\bm{e}_{i,\mathrm{spin}}.
+\end{align}
+Therefore,
 \begin{equation}
 \bm{e}_{i,\mathrm{spin}} = (\lambda_i\mathbf{I} - \mathbf{A})^{-1}
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}}.
@@ -131,7 +152,20 @@ Following Ref.~\cite{Chao:1980fz}, the invariant spin field is expanded to first
 \bm{n}(\bm{z}_{\mathrm{orb}}) = \bm{n}_0 + \mathbf{N}
 \left(\bm{z}_{\mathrm{orb}} - \bm{z}_{\mathrm{orb}}^{\mathrm{CO}}\right).
 \end{equation}
-Using the one-turn map and the eigenvector decomposition above, the linear matrix $\mathbf{N}$ can be written as
+Dropping the constant terms for the linear derivation, one may write $\bm{z}_{1,\mathrm{spin}} = \mathbf{N}\bm{z}_{1,\mathrm{orb}}$. After one turn,
+\begin{align}
+\bm{z}_{2,\mathrm{orb}} &= \mathbf{R}_{\mathrm{orb}}\bm{z}_{1,\mathrm{orb}}, \\
+\bm{z}_{2,\mathrm{spin}} &= \mathbf{D}\bm{z}_{1,\mathrm{orb}} + \mathbf{A}\bm{z}_{1,\mathrm{spin}}.
+\end{align}
+By invariance of the spin field, $\bm{z}_{2,\mathrm{spin}} = \mathbf{N}\bm{z}_{2,\mathrm{orb}}$, hence
+\begin{equation}
+\mathbf{N}\mathbf{R}_{\mathrm{orb}}\bm{z}_{1,\mathrm{orb}} = \mathbf{D}\bm{z}_{1,\mathrm{orb}} + \mathbf{A}\mathbf{N}\bm{z}_{1,\mathrm{orb}}.
+\end{equation}
+Choosing $\bm{z}_{1,\mathrm{orb}} = \bm{e}_{i,\mathrm{orb}}$ for any orbital eigenmode gives
+\begin{equation}
+(\lambda_i\mathbf{I} - \mathbf{A})\mathbf{N}\bm{e}_{i,\mathrm{orb}} = \mathbf{D}\bm{e}_{i,\mathrm{orb}}.
+\end{equation}
+Comparison with the eigenvector relation above yields $\mathbf{N}\bm{e}_{i,\mathrm{orb}} = \bm{e}_{i,\mathrm{spin}}$, so that the linear matrix can be written as
 \begin{equation}
 \mathbf{N} = \mathbf{E}^{\mathrm{spin}}\left(\mathbf{E}^{\mathrm{orb}}\right)^{-1},
 \end{equation}
@@ -142,9 +176,49 @@ The implementation also includes the computation of equilibrium polarization and
 P(t) = P(0)e^{-t/\tau_{\mathrm{tot}}} + P_{\mathrm{eq}}
 \left(1 - e^{-t/\tau_{\mathrm{tot}}}\right),
 \end{equation}
-with $P_{\mathrm{eq}} = \frac{8}{5\sqrt{3}}\,\alpha_-/\alpha_+$ and $\tau_{\mathrm{tot}}^{-1} = \frac{5\sqrt{3}}{8}\frac{r_e\hbar\gamma^5}{m_e}\alpha_+$. In the linearized treatment, $\alpha_+$ and $\alpha_-$ are evaluated from ring integrals containing the closed-orbit spin direction and the derivative $d\bm{n}/d\delta$. This yields both the buildup rate and the depolarization contribution in a form suitable for fast lattice scans.
+with
+\begin{equation}
+P_{\mathrm{eq}} = \frac{8}{5\sqrt{3}}\,\frac{\alpha_-}{\alpha_+},
+\qquad
+\tau_{\mathrm{tot}}^{-1} = \frac{5\sqrt{3}}{8}\frac{r_e\hbar\gamma^5}{m_e}\alpha_+.
+\end{equation}
+In the linearized treatment, the relevant ring integrals are approximated by
+\begin{align}
+\alpha_+ &\simeq \frac{1}{C}\oint \frac{ds}{|\rho(s)|^3}
+\left[1 - \frac{2}{9}(\bm{n}_0 \cdot \hat{\bm{i}}_v)^2
++ \frac{11}{18}\left|\frac{\partial \bm{n}}{\partial \delta}\right|^2\right]_s, \\
+\alpha_- &\simeq \frac{1}{C}\oint \frac{ds}{|\rho(s)|^3}
+\left[\hat{\bm{i}}_B \cdot
+\left(\bm{n}_0 - \frac{\partial \bm{n}}{\partial \gamma}\right)\right]_s.
+\end{align}
+The total buildup rate can be decomposed as
+\begin{equation}
+\tau_{\mathrm{tot}}^{-1} = \tau_{\mathrm{pol}}^{-1} + \tau_{\mathrm{depol}}^{-1},
+\end{equation}
+where the first term is the polarization source and the second the depolarization contribution proportional to $|\partial \bm{n}/\partial \delta|^2$. This yields both the buildup rate and the depolarization contribution in a form suitable for fast lattice scans.
 
-To account for nonlinear effects, Xsuite also supports a Monte Carlo approach in which the depolarization time is estimated from tracking with synchrotron-radiation quantum excitation~\cite{DUAN201581}. Combining this depolarization rate with the asymptotic polarization from the linear formalism provides a practical estimate of the nonlinear equilibrium polarization.
+To account for nonlinear effects, Xsuite also supports a Monte Carlo approach in which the depolarization time is estimated from tracking with synchrotron-radiation quantum excitation~\cite{DUAN201581}. Defining the asymptotic polarization without depolarization as
+\begin{equation}
+P_{\infty} = \frac{8}{5\sqrt{3}}
+\frac{\oint \frac{ds}{|\rho(s)|^3}
+\left[\hat{\bm{i}}_B \cdot \bm{n}_0\right]_s}
+{\oint \frac{ds}{|\rho(s)|^3}
+\left[1 - \frac{2}{9}(\bm{n}_0 \cdot \hat{\bm{i}}_v)^2\right]_s},
+\end{equation}
+the nonlinear estimate can be written as
+\begin{equation}
+P_{\mathrm{eq}} = P_{\infty}\left(1 + \frac{\tau_{\mathrm{pol}}}{\tau_{\mathrm{depol}}}\right)^{-1},
+\end{equation}
+with $\tau_{\mathrm{tot}}^{-1} = \tau_{\mathrm{pol}}^{-1} + \tau_{\mathrm{depol}}^{-1}$. In this way, a tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the linear formalism to obtain practical nonlinear estimates of equilibrium polarization and buildup time.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{monte_carlo.png}
+\caption{Example of depolarization-rate extraction from Monte Carlo tracking with synchrotron-radiation quantum excitation. The relative polarization decay is fitted linearly over the sampled turns.}
+\label{fig:monte_carlo_benchmark}
+\end{figure}
+
+Figure~\ref{fig:monte_carlo_benchmark} illustrates the tracking-based extraction of the depolarization rate used in the nonlinear polarization estimate.
 
 \section{Benchmark Strategy}
 
