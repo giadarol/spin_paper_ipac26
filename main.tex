@@ -143,42 +143,66 @@ The one-turn map linearized around the closed orbit can written as:
 Here $\mathbf{R}_{\mathrm{orb}}$ is the $6\times6$ orbital map, $\mathbf{A}$ is the $3\times3$ spin block, and $\mathbf{D}$ describes the first-order coupling from orbital coordinates to spin. Let $\bm{e}_i$ and $\lambda_i$ denote the eigenvectors and eigenvalues of $\mathbf{R}$, such that $\mathbf{R}\bm{e}_i = \lambda_i\bm{e}_i$. 
 Using the block structure of $\mathbf{R}$, we can write:
 \begin{align}
-\mathbf{R}_{\mathrm{orb}}\,\bm{e}_{i,\mathrm{orb}} &= \lambda_i\bm{e}_{i,\mathrm{orb}}, \\
+\mathbf{R}_{\mathrm{orb}}\,\bm{e}_{i,\mathrm{orb}} &= \lambda_i\bm{e}_{i,\mathrm{orb}},
+\label{eq:orbital_eigenmode}\\
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}} + \mathbf{A}\,\bm{e}_{i,\mathrm{spin}} &= \lambda_i\bm{e}_{i,\mathrm{spin}}.
+\label{eq:spin_block_relation}
 \end{align}
 This shows that the orbital part of the 9D eigenvector $\bm{e}_i$ is an eigenvector of the orbital map $\mathbf{R}_{\mathrm{orb}}$, while the spin part is related to the orbital part through
 \begin{equation}
 \bm{e}_{i,\mathrm{spin}} = (\lambda_i\mathbf{I} - \mathbf{A})^{-1}
 \mathbf{D}\,\bm{e}_{i,\mathrm{orb}}.
+\label{eq:spin_from_orbital_mode}
 \end{equation}
 Once the eigenvectors are computed at a given location, they can be propagated to any other location along the ring by tracking particles having the eigenvectors as initial conditions (suitably scaled to remain in the linear regime).
 
-From the eigenvectors we can obtain to first order the Invariant Spin Field (ISF) function \textbf{[REF]}, which is necessary for the evaluation of radiative depolarization effects.
+From the eigenvectors we can obtain to first order the Invariant Spin Field (ISF) function~\cite{Chao:1980fz}, which is necessary for the evaluation of radiative depolarization effects.
 Following Ref.~\cite{Chao:1980fz}, the ISF function  expanded to first order around the closed orbit can be written as
 \begin{equation}
 \bm{n}(\bm{z}_{\mathrm{orb}}) = \bm{n}_0 + \mathbf{N}
 \left(\bm{z}_{\mathrm{orb}} - \bm{z}_{\mathrm{orb}}^{\mathrm{CO}}\right).
+\label{eq:isf_linear_expansion}
 \end{equation}
-Dropping the constant terms for the linear derivation, one may write $\bm{z}_{1,\mathrm{spin}} = \mathbf{N}\bm{z}_{1,\mathrm{orb}}$. After one turn,
+Dropping the constant terms in Eq.~(\ref{eq:isf_linear_expansion}) for the linear derivation, one may write
+\begin{equation}
+\bm{z}_{1,\mathrm{spin}} = \mathbf{N}\bm{z}_{1,\mathrm{orb}}.
+\label{eq:isf_at_z1}
+\end{equation}
+After one turn,
 \begin{align}
-\bm{z}_{2,\mathrm{orb}} &= \mathbf{R}_{\mathrm{orb}}\bm{z}_{1,\mathrm{orb}}, \\
+\bm{z}_{2,\mathrm{orb}} &= \mathbf{R}_{\mathrm{orb}}\bm{z}_{1,\mathrm{orb}},
+\label{eq:z2_orbital}\\
 \bm{z}_{2,\mathrm{spin}} &= \mathbf{D}\bm{z}_{1,\mathrm{orb}} + \mathbf{A}\bm{z}_{1,\mathrm{spin}}.
+\label{eq:z2_spin}
 \end{align}
-By invariance of the spin field, $\bm{z}_{2,\mathrm{spin}} = \mathbf{N}\bm{z}_{2,\mathrm{orb}}$, hence
+By invariance of the spin field we also have
+\begin{equation}
+\bm{z}_{2,\mathrm{spin}} = \mathbf{N}\bm{z}_{2,\mathrm{orb}}.
+\label{eq:isf_at_z2}
+\end{equation}
+Substituting Eqs.~(\ref{eq:z2_orbital}) and (\ref{eq:z2_spin}) into Eq.~(\ref{eq:isf_at_z2}) gives
 \begin{equation}
 \mathbf{N}\mathbf{R}_{\mathrm{orb}}\bm{z}_{1,\mathrm{orb}} = \mathbf{D}\bm{z}_{1,\mathrm{orb}} + \mathbf{A}\mathbf{N}\bm{z}_{1,\mathrm{orb}}.
+\label{eq:isf_invariance_map}
 \end{equation}
-Choosing $\bm{z}_{1,\mathrm{orb}} = \bm{e}_{i,\mathrm{orb}}$ for any orbital eigenmode gives
+Choosing $\bm{z}_{1,\mathrm{orb}} = \bm{e}_{i,\mathrm{orb}}$ and then using Eq.~(\ref{eq:orbital_eigenmode}) in Eq.~(\ref{eq:isf_invariance_map}) gives
 \begin{equation}
 (\lambda_i\mathbf{I} - \mathbf{A})\mathbf{N}\bm{e}_{i,\mathrm{orb}} = \mathbf{D}\bm{e}_{i,\mathrm{orb}}.
+\label{eq:isf_mode_relation}
 \end{equation}
-Comparison with the eigenvector relation above yields $\mathbf{N}\bm{e}_{i,\mathrm{orb}} = \bm{e}_{i,\mathrm{spin}}$, so that the linear matrix can be written as
+Comparing Eq.~(\ref{eq:isf_mode_relation}) with Eq.~(\ref{eq:spin_from_orbital_mode}), one obtains
+\begin{equation}
+\mathbf{N}\bm{e}_{i,\mathrm{orb}} = \bm{e}_{i,\mathrm{spin}}.
+\label{eq:isf_action_on_modes}
+\end{equation}
+Applying Eq.~(\ref{eq:isf_action_on_modes}) to the six orbital eigenvectors, we obtain the ISF matrix $\mathbf{N}$ as
 \begin{equation}
 \mathbf{N} = \mathbf{E}^{\mathrm{spin}}\left(\mathbf{E}^{\mathrm{orb}}\right)^{-1},
+\label{eq:isf_matrix_from_eigenvectors}
 \end{equation}
-where $\mathbf{E}^{\mathrm{orb}}$ collects the six orbital eigenvectors and $\mathbf{E}^{\mathrm{spin}}$ the corresponding spin components. In particular, the last column of $\mathbf{N}$ provides $d\bm{n}/d\delta$, which is a key ingredient in the evaluation of radiative depolarization.
+where $\mathbf{E}^{\mathrm{orb}}$ collects the six orbital eigenvectors and $\mathbf{E}^{\mathrm{spin}}$ the corresponding spin components. In particular, the last column of $\mathbf{N}$ provides $d\bm{n}/d\delta$, which is needed in the evaluation of radiative depolarization.
 
-The implementation also includes the computation of equilibrium polarization and polarization time based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
+The computation of equilibrium polarization and polarization time is based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
 \begin{equation}
 P(t) = P(0)e^{-t/\tau_{\mathrm{tot}}} + P_{\mathrm{eq}}
 \left(1 - e^{-t/\tau_{\mathrm{tot}}}\right),
@@ -198,11 +222,21 @@ In the linearized treatment, the relevant ring integrals are approximated by
 \left[\hat{\bm{i}}_B \cdot
 \left(\bm{n}_0 - \frac{\partial \bm{n}}{\partial \gamma}\right)\right]_s.
 \end{align}
+where $\hat{\bm{i}}_B$ and $\hat{\bm{i}}_v$ are unit vectors along the magnetic field and the particle velocity, respectively, $\rho(s)$ is the local bending radius, and $C$ is the ring circumference.
 The total buildup rate can be decomposed as
 \begin{equation}
 \tau_{\mathrm{tot}}^{-1} = \tau_{\mathrm{pol}}^{-1} + \tau_{\mathrm{depol}}^{-1},
 \end{equation}
-where the first term is the polarization source and the second the depolarization contribution proportional to $|\partial \bm{n}/\partial \delta|^2$. This yields both the buildup rate and the depolarization contribution in a form suitable for fast lattice scans.
+where
+\begin{align}
+\tau_{\mathrm{pol}}^{-1} &= \frac{5\sqrt{3}}{8}\frac{r_e\hbar\gamma^5}{m_e}\frac{1}{C}
+\oint \frac{ds}{|\rho(s)|^3}
+\left[1 - \frac{2}{9}(\bm{n}_0 \cdot \hat{\bm{i}}_v)^2\right]_s, \\
+\tau_{\mathrm{depol}}^{-1} &= \frac{5\sqrt{3}}{8}\frac{r_e\hbar\gamma^5}{m_e}\frac{1}{C}
+\oint \frac{ds}{|\rho(s)|^3}
+\left[\frac{11}{18}\left|\frac{\partial \bm{n}}{\partial \delta}\right|^2\right]_s.
+\end{align}
+The first term is the polarization source and the second the depolarization contribution proportional to $|\partial \bm{n}/\partial \delta|^2$. This yields both the buildup rate and the depolarization contribution in a form suitable for fast lattice scans.
 
 To account for nonlinear effects, Xsuite also supports a Monte Carlo approach in which the depolarization time is estimated from tracking with synchrotron-radiation quantum excitation~\cite{DUAN201581}. Defining the asymptotic polarization without depolarization as
 \begin{equation}
