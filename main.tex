@@ -91,9 +91,9 @@ The spin motion is described through the Thomas--BMT equation~\cite{hoffstaetter
 \bm{\Omega}_{\mathrm{BMT}} = -\frac{1}{B\rho_{\mathrm{part}}}
 \left[(1 + a\gamma)\bm{B}_{\perp} + (1 + a)\bm{B}_{\parallel}\right],
 \end{equation}
-where $a$ is the anomalous magnetic moment, while $\bm{B}_{\parallel}$ and $\bm{B}_{\perp}$ are the magnetic-field components parallel and transverse to the particle velocity. Over an element of length $\ell$, the spin-precession angle is $\phi = |\bm{\Omega}|\ell$.
+where $B\rho_{\mathrm{part}}$ is the particle magnetic rigidity, $\gamma$ is the Lorentz factor, $a$ is the anomalous magnetic moment, and $\bm{B}_{\parallel}$ and $\bm{B}_{\perp}$ are the magnetic-field components parallel and transverse to the particle velocity. Over an element of length $\ell$, the spin-precession angle is $\phi = |\bm{\Omega}|\ell$.
 
-In the Xsuite implementation, the spin vector is advanced through the corresponding three-dimensional rotation at each integration step. Using the unit vector $\bm{\omega} = \bm{\Omega}/|\bm{\Omega}|$, the spin transport is represented in terms of the quaternion-like coefficients
+In the Xsuite implementation, the spin vector is advanced through the corresponding three-dimensional rotation at each integration step. Using the unit vector $\bm{\omega} = \bm{\Omega}/|\bm{\Omega}|$, the spin transport is represented in terms of the following coefficients
 \begin{align}
 t_0 &= \cos\left(\frac{\phi}{2}\right), &
 t_x &= \omega_x\sin\left(\frac{\phi}{2}\right), \\
