@@ -110,7 +110,7 @@ from which the standard rotation matrix is constructed,
 2(t_x t_s - t_0 t_y) & 2(t_s t_y + t_0 t_x) & (t_0^2 + t_s^2) - (t_x^2 + t_y^2)
 \end{pmatrix}$},
 \end{equation}
-and applied to the spin coordinates. This formulation is compatible with six-dimensional orbital integration and with the element-by-element workflow already used in Xsuite. The same implementation is used in both tracking and optics calculations, where spin can be enabled for a line and then exploited by the Twiss module to compute closed-orbit spin quantities and linear polarization estimates.
+and applied to the spin coordinates. Such implementation is used in the tracking module and is also exploited by the Twiss module to compute closed-orbit spin components and linear polarization estimates.
 
 \section{Spin and Polarization Calculations in Twiss Module}
 
