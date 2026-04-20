@@ -7,7 +7,6 @@
                %titlepage,    % separate title page
                %refpage       % separate references
                biblatex,     % biblatex is used
-               keeplastbox,   % flushend option: not to un-indent last line in References
                %nospread,     % flushend option: do not fill with whitespace to balance columns
                hyphens,      % allow \url to hyphenate at "-" (hyphens)
                %xetex,        % use XeLaTeX to process the file
@@ -132,7 +131,7 @@ are the orbital coordinates and
 \end{equation}
 are the three spin components.
 
-The one-turn map linearized around the closed orbit can written as:
+The one-turn map linearized around the closed orbit can be written as:
 \begin{equation}
 \mathbf{R} =
 \begin{pmatrix}
@@ -157,7 +156,7 @@ This shows that the orbital part of the 9D eigenvector $\bm{e}_i$ is an eigenvec
 Once the eigenvectors are computed at a given location, they can be propagated to any other location along the ring by tracking particles having the eigenvectors as initial conditions (suitably scaled to remain in the linear regime).
 
 From the eigenvectors we can obtain to first order the Invariant Spin Field (ISF) function~\cite{Chao:1980fz}, which is necessary for the evaluation of radiative depolarization effects.
-Following Ref.~\cite{Chao:1980fz}, the ISF function  expanded to first order around the closed orbit can be written as
+Following Ref.~\cite{Chao:1980fz}, the ISF function expanded to first order around the closed orbit can be written as
 \begin{equation}
 \bm{n}(\bm{z}_{\mathrm{orb}}) = \bm{n}_0 + \mathbf{N}
 \left(\bm{z}_{\mathrm{orb}} - \bm{z}_{\mathrm{orb}}^{\mathrm{CO}}\right).
@@ -291,27 +290,3 @@ Xsuite now includes a consistent set of spin-dynamics tools covering Thomas--BMT
 
 
 \end{document}
-
-
-
-
-
-
-
-% \documentclass{article}
-% \usepackage{graphicx} % Required for inserting images
-
-% \title{}
-% \author{giovanni.iadarola }
-% \date{November 2025}
-
-% \begin{document}
-
-% \maketitle
-
-% \section{Introduction}
-
-% \end{document}
-
-
-
