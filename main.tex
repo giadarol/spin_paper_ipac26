@@ -205,7 +205,7 @@ Applying Eq.~(\ref{eq:isf_action_on_modes}) to the six orbital eigenvectors, we 
 \end{equation}
 where $\mathbf{E}^{\mathrm{orb}}$ collects the six orbital eigenvectors and $\mathbf{E}^{\mathrm{spin}}$ the corresponding spin components. In particular, the last column of $\mathbf{N}$ provides $d\bm{n}/d\delta$, which is needed in the evaluation of radiative depolarization.
 
-The computation of equilibrium polarization and ot polarization time from synchrotron radiation effects is based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
+The computation of equilibrium polarization and of polarization time from synchrotron radiation effects is based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
 \begin{equation}
 P(t) = P(0)e^{-t/\tau_{\mathrm{tot}}} + P_{\mathrm{eq}}
 \left(1 - e^{-t/\tau_{\mathrm{tot}}}\right),
@@ -223,7 +223,7 @@ In the linearized treatment, the relevant ring integrals are approximated by
 + \frac{11}{18}\left|\frac{\partial \bm{n}}{\partial \delta}\right|^2\right]_s, \\
 \alpha_- &\simeq \frac{1}{C}\oint \frac{ds}{|\rho(s)|^3}
 \left[\hat{\bm{i}}_B \cdot
-\left(\bm{n}_0 - \frac{\partial \bm{n}}{\partial \gamma}\right)\right]_s.
+\left(\bm{n}_0 - \frac{\partial \bm{n}}{\partial \delta}\right)\right]_s.
 \end{align}
 where $\hat{\bm{i}}_B$ and $\hat{\bm{i}}_v$ are unit vectors along the magnetic field and the particle velocity, respectively, $\rho(s)$ is the local bending radius, and $C$ is the ring circumference.
 The total buildup rate can be decomposed into a polarization term and a depolarization contribution:
@@ -263,7 +263,7 @@ A tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the li
 Figure~\ref{fig:monte_carlo_benchmark} shows an example of depolarization-rate extraction from Monte Carlo tracking for the LEP1 lattice  where a set of 300 particles is tracked for 200 turns. Particles are initialized on the closed orbit with spin aligned with the ISF.
 \section{Benchmarks}
 
-As a benchmark case, we use the LEP1 model. This choice also enables, as a second stage, a comparison with the historical LEP energy-calibration data collected in the 1990s (addressed in a separate study). In LEP, vertical orbit bumps were used to compensate the spin precession induced by the experimental solenoids, in order to build up bunch polarization for energy calibration~\cite{arnaudon1994lep_energy,blondel1990solenoid_compensation}. Here, the Xsuite results are compared against BMAD for both deterministic quantities (spin closed orbit and first-order invariant spin field) and radiative observables (equilibrium polarization and polarization buildup time).
+As a benchmark case, we use the LEP1 model. This choice also enables, as a second stage, a comparison with the historical LEP energy-calibration data collected in the 1990s (addressed in a separate contribution~\cite{wenninger2026_lep_benchmark_ipac26}). In LEP, vertical orbit bumps were used to compensate the spin precession induced by the experimental solenoids, in order to build up bunch polarization for energy calibration~\cite{arnaudon1994lep_energy,blondel1990solenoid_compensation}. Here, the Xsuite results are compared against BMAD for both deterministic quantities (spin closed orbit and first-order invariant spin field) and radiative observables (equilibrium polarization and polarization buildup time).
 
 \begin{figure}[t]
 \centering
