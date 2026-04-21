@@ -82,7 +82,7 @@ The new tool has been benchmarked against the BMAD code for representative latti
 
 \section{Introduction}
 
-Accurate spin-dynamics modeling is a central requirement for the FCC-ee~\cite{fcc_ee_cdr} energy-calibration programme, where resonant depolarization will be used to infer the beam energy with high precision. In this context, tracking tools need to provide not only the orbital motion but also the spin motion, the spin closed orbit, and reliable estimates of polarization buildup and depolarization. Xsuite~\cite{xsuite_reference_paper,xsuite_docs} has been adopted for several FCC design and simulation studies; we therefore decided to introduce spin capabilities to allow its application to spin-related studies.
+Accurate spin-dynamics modeling is a central requirement for the FCC-ee energy-calibration programme, where resonant depolarization will be used to infer the beam energy with high precision~\cite{fcc_ee_cdr}. In this context, tracking tools need to provide not only the orbital motion but also the spin motion, the spin closed orbit, and reliable estimates of polarization buildup and depolarization. Xsuite~\cite{xsuite_reference_paper,xsuite_docs} has been adopted for several FCC design and simulation studies; we therefore decided to introduce spin capabilities to allow its application to spin-related studies.
 
 This paper summarizes recent spin-physics developments in Xsuite. The implementation covers single-particle spin transport based on the Thomas--BMT equation, a first-order computation of the invariant spin field from the one-turn map, and the evaluation of equilibrium polarization and polarization time including radiative effects. The new implementation has been benchmarked against BMAD~\cite{Sagan:BmadManual}.
 
@@ -93,7 +93,7 @@ The spin motion is described through the Thomas--BMT equation~\cite{hoffstaetter
 \bm{\Omega}_{\mathrm{BMT}} = -\frac{1}{B\rho_{\mathrm{part}}}
 \left[(1 + a\gamma)\bm{B}_{\perp} + (1 + a)\bm{B}_{\parallel}\right],
 \end{equation}
-where $B\rho_{\mathrm{part}}$ is the particle magnetic rigidity, $\gamma$ is the Lorentz factor, $a$ is the anomalous magnetic moment, and $\bm{B}_{\parallel}$ and $\bm{B}_{\perp}$ are the magnetic-field components parallel and transverse to the particle velocity. Over an element of length $\ell$, the spin-precession angle is $\phi = |\bm{\Omega}|\ell$.
+where $B\rho_{\mathrm{part}}$ is the particle magnetic rigidity, $\gamma$ is the Lorentz factor, $a$ is the anomalous magnetic moment, and $\bm{B}_{\parallel}$ and $\bm{B}_{\perp}$ are the magnetic-field components parallel and transverse to the particle velocity. Over a length $\ell$, the spin-precession angle is $\phi = |\bm{\Omega}|\ell$.
 
 In the Xsuite implementation, the spin vector is advanced through the corresponding three-dimensional rotation at each integration step. Using the unit vector $\bm{\omega} = \bm{\Omega}/|\bm{\Omega}|$, the spin transport is represented in terms of the following coefficients
 \begin{align}
@@ -166,7 +166,7 @@ Following Ref.~\cite{Chao:1980fz}, the ISF function expanded to first order arou
 \label{eq:isf_linear_expansion}
 \end{equation}
 where $\mathbf{N}$ is a $3\times6$ matrix to be found.
-Dropping the constant terms in Eq.~(\ref{eq:isf_linear_expansion}) for the linear derivation, one may write, for a particle having spin aligned with the ISF,
+Dropping the constant terms in Eq.~(\ref{eq:isf_linear_expansion}), we can write, for a particle having spin aligned with the ISF,
 \begin{equation}
 \bm{z}_{1,\mathrm{spin}} = \mathbf{N}\bm{z}_{1,\mathrm{orb}}.
 \label{eq:isf_at_z1}
@@ -252,7 +252,7 @@ the equilibrium polarization can be expressed as
 \begin{equation}
 P_{\mathrm{eq}} = P_{\infty}\left(1 + \frac{\tau_{\mathrm{pol}}}{\tau_{\mathrm{depol}}}\right)^{-1},
 \end{equation}
-A tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the linear estimate of $\tau_{\mathrm{pol}}$ to obtain an estimate of the equilibrium polarization that includes nonlinear effects.
+A tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the evaluation of $\tau_{\mathrm{pol}}$ from the linear method to obtain an estimate of the equilibrium polarization accounting for depolarization effects from non-linear resonances~\cite{Boge:1994we}.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{monte_carlo.png}
@@ -281,7 +281,7 @@ Figure~\ref{fig:orbit_spin_benchmark} shows the applied orbit bump and the three
 \label{fig:polarization_benchmark}
 \end{figure}
 
-The global polarization estimate is also well reproduced, as shown in Fig.~\ref{fig:polarization_benchmark}. In addition, consistent results were observed against historical SLIM simulations for the same LEP1 setup, providing an independent cross-check of the implementation~\cite{iadarola2025_xsuite_evolution_fccweek}.
+The global polarization estimate as a function of the compensation bump strengths is also well reproduced, as shown in Fig.~\ref{fig:polarization_benchmark}. In addition, consistent results were observed against SLIM simulations performed in the 1990s for the same LEP1 setup, providing an independent cross-check of the implementation~\cite{iadarola2025_xsuite_evolution_fccweek}.
 
 \section{Conclusion}
 
