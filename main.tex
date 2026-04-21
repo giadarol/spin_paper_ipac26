@@ -261,21 +261,21 @@ A tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the li
 Figure~\ref{fig:monte_carlo_benchmark} shows an example of depolarization-rate extraction from Monte Carlo tracking for the LEP1 lattice  where a set of 300 particles is tracked for 200 turns. Particles are initialized on the closed orbit with spin aligned with the ISF.
 \section{Benchmarks}
 
-The new implementation has been checked against BMAD for representative lepton-ring lattices, with particular attention to the LEP1 configuration including orbit bumps used to compensate the precession induced by the experimental solenoids. The comparison addresses both deterministic quantities, such as the spin closed orbit and the first-order invariant spin field, and radiative observables, such as equilibrium polarization and polarization buildup time.
+As a benchmark case, we use the LEP1 model. This choice also enables, as a second stage, a comparison with the historical LEP energy-calibration data collected in the 1990s (addressed in a separate study). In LEP, vertical orbit bumps were used to compensate the spin precession induced by the experimental solenoids, in order to build up bunch polarization for energy calibration. Here, the Xsuite results are compared against BMAD for both deterministic quantities (spin closed orbit and first-order invariant spin field) and radiative observables (equilibrium polarization and polarization buildup time).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth,trim=4mm 0 10mm 0,clip]{orbit_and_spin.png}
-\caption{Comparison between Xsuite and BMAD for the LEP1 benchmark with compensation bumps. The figure shows the closed vertical orbit and the corresponding spin components along the ring.}
+\caption{Comparison between Xsuite and BMAD for the LEP1 benchmark with compensation bumps. The figure shows the applied orbit bump and the three components of the spin closed solution along the ring.}
 \label{fig:orbit_spin_benchmark}
 \end{figure}
 
-Figure~\ref{fig:orbit_spin_benchmark} shows that the two codes provide nearly identical closed-orbit and spin patterns around the machine. This validates both the closed-spin computation and the linearized spin transport used in Xsuite.
+Figure~\ref{fig:orbit_spin_benchmark} shows the applied orbit bump and the three components of the spin closed solution. The Xsuite result is compared against BMAD, finding excellent agreement.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{polarization.png}
-\caption{Equilibrium polarization as a function of bump strength for the LEP1 benchmark. Xsuite and BMAD are in close agreement over the full scan.}
+\caption{Computed equilibrium polarization as a function of compensation-bump strength for the LEP1 benchmark, where one corresponds to the nominal bump strength. Xsuite and BMAD are in close agreement over the full scan.}
 \label{fig:polarization_benchmark}
 \end{figure}
 
