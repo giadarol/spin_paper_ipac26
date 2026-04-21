@@ -203,7 +203,7 @@ Applying Eq.~(\ref{eq:isf_action_on_modes}) to the six orbital eigenvectors, we 
 \end{equation}
 where $\mathbf{E}^{\mathrm{orb}}$ collects the six orbital eigenvectors and $\mathbf{E}^{\mathrm{spin}}$ the corresponding spin components. In particular, the last column of $\mathbf{N}$ provides $d\bm{n}/d\delta$, which is needed in the evaluation of radiative depolarization.
 
-The computation of equilibrium polarization and polarization time is based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
+The computation of equilibrium polarization and ot polarization time from synchrotron radiation effects is based on the standard Sokolov--Ternov/Derbenev--Kondratenko formalism~\cite{Derbenev:1973ia,Boge:1994we,Mane:1986qy,Barber:1999xm}. The beam polarization evolves as
 \begin{equation}
 P(t) = P(0)e^{-t/\tau_{\mathrm{tot}}} + P_{\mathrm{eq}}
 \left(1 - e^{-t/\tau_{\mathrm{tot}}}\right),
@@ -246,12 +246,11 @@ P_{\infty} = \frac{8}{5\sqrt{3}}
 {\oint \frac{ds}{|\rho(s)|^3}
 \left[1 - \frac{2}{9}(\bm{n}_0 \cdot \hat{\bm{i}}_v)^2\right]_s},
 \end{equation}
-the nonlinear estimate can be written as
+the equilibrium polarization can be expressed as
 \begin{equation}
 P_{\mathrm{eq}} = P_{\infty}\left(1 + \frac{\tau_{\mathrm{pol}}}{\tau_{\mathrm{depol}}}\right)^{-1},
 \end{equation}
-with $\tau_{\mathrm{tot}}^{-1} = \tau_{\mathrm{pol}}^{-1} + \tau_{\mathrm{depol}}^{-1}$. In this way, a tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the linear formalism to obtain practical nonlinear estimates of equilibrium polarization and buildup time.
-
+A tracking-based estimate of $\tau_{\mathrm{depol}}$ can be combined with the linear estimate of $\tau_{\mathrm{pol}}$ to obtain an estimate of the equilibrium polarization that includes nonlinear effects.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{monte_carlo.png}
